@@ -57,3 +57,8 @@ seaborn
 selenium
 playwright
 beautifulsoup4
+
+#JS Custom
+langchain-community
+weaviate-client
+langchain-weaviate
