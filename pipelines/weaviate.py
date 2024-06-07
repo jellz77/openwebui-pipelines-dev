@@ -32,13 +32,15 @@ class Pipeline:
         self.llm = None
     async def on_startup(self):      
         
-        index_name = "Pipeline_testa"
+        #index_name = "Pipeline_testa"
+        index_name="Pipeline_testa"    
+
         self._connect_to_client()
         self._delete_and_add_collections(index_name)
         self._setup_retriever(index_name)
         self._ingest_docs("/home/jonot480/Documents/pipeline_docs_test") #you can change this to the openwebui docs folder if you just want to iterate through those docs...this is just a local test 
 
-        index_name="Pipeline_test"    
+        
 
     def _connect_to_client(self):
         """
@@ -49,7 +51,7 @@ class Pipeline:
             #docker run -p 8081:8080 -p 50051:50051 -e ENABLE_MODULES=text2vec-ollama cr.weaviate.io/semitechnologies/weaviate:1.25.1
             self.client = weaviate.Client("http://localhost:8081")#connection
             self.weaviate_client = weaviate.connect_to_local("localhost", "8081")#client
-            logger.info("Connection to Weaviate successful")
+            logger.info("Connection to Weaviate successful!")
             self.llm = ChatOllama(model="jonphi")
             logger.info("Connection to Ollama successful")
         except Exception as e:
@@ -91,7 +93,7 @@ class Pipeline:
                 create_schema_if_missing=True,
                 k=4
             )
-            logger.info("Retriever setup")
+            logger.info("Retriever setup")#hi
         except Exception as e:
             logger.error(f"Error setting up retriever: {e}")
 
@@ -124,7 +126,8 @@ class Pipeline:
     def pipe(
         self, user_message: str, model_id: str, messages: List[dict], body: dict
     ) -> Union[str, Generator, Iterator]:        
-        
+        print(user_message)
+        print(messages)
         after_rag_template = """
         You are to only answer based on the data found between the <context> tags below.
         <context>
